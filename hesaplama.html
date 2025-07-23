@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gutters Matter - Project Calculator Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(120deg, #f3f6fa 0%, #e6eef7 100%);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px 0;
+        min-height: 100vh;
+      }
+      .panel {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 32px #1c20351a, 0 1.5px 4px #4462820c;
+        padding: 32px 32px 24px 32px;
+        min-width: 330px;
+        max-width: 390px;
+        flex: 1 1 340px;
+      }
+      h2 {
+        font-size: 1.25rem;
+        color: #37547a;
+        margin: 0 0 18px 0;
+        letter-spacing: 0.01em;
+      }
+      label {
+        display: block;
+        margin: 18px 0 4px 0;
+        font-weight: 500;
+        color: #24334e;
+      }
+      input[type="number"],
+      select {
+        font-size: 1.05rem;
+        border: 1.5px solid #d5dfeb;
+        border-radius: 7px;
+        padding: 7px 12px;
+        margin-bottom: 5px;
+        width: 100%;
+        background: #f8fafc;
+        transition: border 0.2s;
+        outline: none;
+      }
+      input[type="number"]:focus,
+      select:focus {
+        border-color: #66a7f8;
+        background: #f0f6fc;
+      }
+      .settings-group {
+        margin-bottom: 18px;
+        border-bottom: 1px solid #f2f4f7;
+        padding-bottom: 12px;
+      }
+      .out {
+        margin-top: 28px;
+        background: linear-gradient(90deg, #e8f3fd 0%, #f1f7fb 100%);
+        padding: 20px 15px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #285580;
+        box-shadow: 0 1.5px 8px #bfd2e21a;
+      }
+      .out b {
+        color: #305e8c;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 36px;
+        color: #aac;
+        font-size: 0.98em;
+      }
+      @media (max-width: 900px) {
+        .container {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 20px;
+        }
+        .panel {
+          max-width: 100%;
+          width: 94vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel">
+        <h2>💸 Fiyat Ayarları</h2>
+        <div class="settings-group">
+          <label>Single Story ft fiyatı</label>
+          <input type="number" id="priceSingleStory" value="7.5" step="0.1" />
+          <label>Two Story ft fiyatı</label>
+          <input type="number" id="priceTwoStory" value="8.5" step="0.1" />
+          <label>Three Story ft fiyatı</label>
+          <input type="number" id="priceThreeStory" value="9" step="0.1" />
+        </div>
+        <div class="settings-group">
+          <label>Single Downspout fiyatı</label>
+          <input type="number" id="priceSingleDown" value="55" />
+          <label>Two Downspout fiyatı</label>
+          <input type="number" id="priceTwoDown" value="57.5" />
+          <label>Three Downspout fiyatı</label>
+          <input type="number" id="priceThreeDown" value="60" />
+        </div>
+        <div class="settings-group">
+          <label>Miter fiyatları (her tip)</label>
+          <input type="number" id="priceMiter" value="25" />
+        </div>
+        <div class="settings-group">
+          <label>Copper çarpanı</label>
+          <input type="number" id="copperFactor" value="3" step="0.1" />
+          <label>Guard ft fiyatı</label>
+          <input type="number" id="guardRate" value="8" />
+          <label>Replacement işçilik (ft başı)</label>
+          <input type="number" id="replacementRate" value="1.5" step="0.1" />
+          <label>Minimum fiyat</label>
+          <input type="number" id="minPrice" value="500" />
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>🏡 Proje Girdisi</h2>
+        <label>Material Type</label>
+        <select id="material">
+          <option value="Aluminum">Aluminum</option>
+          <option value="Copper">Copper</option>
+        </select>
+        <label>Single-Story Length (ft)</label>
+        <input type="number" id="lenSingle" value="0" />
+        <label>Two-Story Length (ft)</label>
+        <input type="number" id="lenTwo" value="0" />
+        <label>Three-Story Length (ft)</label>
+        <input type="number" id="lenThree" value="0" />
+        <label>Single-Story Downspout</label>
+        <input type="number" id="downSingle" value="0" />
+        <label>Two-Story Downspout</label>
+        <input type="number" id="downTwo" value="0" />
+        <label>Three-Story Downspout</label>
+        <input type="number" id="downThree" value="0" />
+        <label>Inside 90° Miters</label>
+        <input type="number" id="miterIn90" value="0" />
+        <label>Inside 45° Miters</label>
+        <input type="number" id="miterIn45" value="0" />
+        <label>Outside 90° Miters</label>
+        <input type="number" id="miterOut90" value="0" />
+        <label>Outside 45° Miters</label>
+        <input type="number" id="miterOut45" value="0" />
+        <label>Roof Type</label>
+        <select id="roofType">
+          <option value="Walkable">Walkable</option>
+          <option value="Unwalkable">Unwalkable</option>
+        </select>
+        <label>Installation Type</label>
+        <select id="installationType">
+          <option value="New">New Installation</option>
+          <option value="Replacement">Replacement</option>
+        </select>
+        <label style="margin-top: 14px">
+          <input type="checkbox" id="withGuard" />
+          Guard da dahil et (opsiyonel)
+        </label>
+        <div class="out" id="output">
+          <b>Toplam Fiyat:</b> <span id="total"></span><br />
+          <span id="guard"></span>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <b>Gutters Matter</b> | Gutter Project Calculator Demo
+    </div>
+
+    <script>
+      function calculate() {
+        var priceSingleStory = parseFloat(
+          document.getElementById("priceSingleStory").value
+        );
+        var priceTwoStory = parseFloat(
+          document.getElementById("priceTwoStory").value
+        );
+        var priceThreeStory = parseFloat(
+          document.getElementById("priceThreeStory").value
+        );
+        var priceSingleDown = parseFloat(
+          document.getElementById("priceSingleDown").value
+        );
+        var priceTwoDown = parseFloat(
+          document.getElementById("priceTwoDown").value
+        );
+        var priceThreeDown = parseFloat(
+          document.getElementById("priceThreeDown").value
+        );
+        var priceMiter = parseFloat(
+          document.getElementById("priceMiter").value
+        );
+        var copperFactor = parseFloat(
+          document.getElementById("copperFactor").value
+        );
+        var guardRate = parseFloat(document.getElementById("guardRate").value);
+        var replacementRate = parseFloat(
+          document.getElementById("replacementRate").value
+        );
+        var minPrice = parseFloat(document.getElementById("minPrice").value);
+
+        var material = document.getElementById("material").value;
+        var lenSingle =
+          parseFloat(document.getElementById("lenSingle").value) || 0;
+        var lenTwo = parseFloat(document.getElementById("lenTwo").value) || 0;
+        var lenThree =
+          parseFloat(document.getElementById("lenThree").value) || 0;
+        var downSingle =
+          parseFloat(document.getElementById("downSingle").value) || 0;
+        var downTwo = parseFloat(document.getElementById("downTwo").value) || 0;
+        var downThree =
+          parseFloat(document.getElementById("downThree").value) || 0;
+        var miterIn90 =
+          parseFloat(document.getElementById("miterIn90").value) || 0;
+        var miterIn45 =
+          parseFloat(document.getElementById("miterIn45").value) || 0;
+        var miterOut90 =
+          parseFloat(document.getElementById("miterOut90").value) || 0;
+        var miterOut45 =
+          parseFloat(document.getElementById("miterOut45").value) || 0;
+        var roofType = document.getElementById("roofType").value;
+        var installationType =
+          document.getElementById("installationType").value;
+        var withGuard = document.getElementById("withGuard").checked;
+
+        var materialMultiplier = material === "Copper" ? copperFactor : 1;
+
+        var gutterLengthPrice =
+          lenSingle * priceSingleStory +
+          lenTwo * priceTwoStory +
+          lenThree * priceThreeStory;
+        var downspoutPrice =
+          downSingle * priceSingleDown +
+          downTwo * priceTwoDown +
+          downThree * priceThreeDown;
+        var miterPrice =
+          (miterIn90 + miterIn45 + miterOut90 + miterOut45) * priceMiter;
+        var materialTotal =
+          (gutterLengthPrice + downspoutPrice + miterPrice) *
+          materialMultiplier;
+
+        if (roofType === "Unwalkable") materialTotal *= 1.15;
+
+        var totalFt = lenSingle + lenTwo + lenThree;
+        var replacementPrice =
+          installationType === "Replacement" ? totalFt * replacementRate : 0;
+
+        var discount = 0;
+        if (totalFt >= 150) discount = 0.15;
+        else if (totalFt >= 100) discount = 0.1;
+
+        var total = (materialTotal + replacementPrice) * (1 - discount);
+        if (total < minPrice) total = minPrice;
+
+        var guardTotal = totalFt * guardRate * materialMultiplier;
+        var guardString = "";
+        if (withGuard) {
+          var guardIncluded = total + guardTotal;
+          guardString =
+            "<b>Guard dahil toplam:</b> $" + guardIncluded.toFixed(2);
+        } else {
+          guardString =
+            "<b>Guard eklerseniz ekstra:</b> $" + guardTotal.toFixed(2);
+        }
+
+        document.getElementById("total").innerText = "$" + total.toFixed(2);
+        document.getElementById("guard").innerHTML = guardString;
+      }
+
+      Array.from(document.querySelectorAll("input,select")).forEach((e) =>
+        e.addEventListener("input", calculate)
+      );
+      calculate();
+    </script>
+  </body>
+</html>
